@@ -12,8 +12,8 @@
 ## syllabus
 
 - jogo de plataforma 2D inspirado no clássico [Donkey Kong](https://pt.wikipedia.org/wiki/Donkey_Kong)
-- menu principal com configurações e iniciar jogo e menu de pausa com opção de voltar pro jogo e voltar pro menu
-- configurações: volume, instruções de jogo
+- menu principal com configurações, iniciar jogo e menu de pausa com opção de voltar para o jogo ou menu
+- configurações: volume, instruções de jogo(controles)
 - proposta do jogo:
     - controlar personagem com 3 "vidas" que se move no eixo X e sobe escadas, obtendo colecionáveis que modificam, de alguma forma, a gameplay, são eles:
         - maçã: quando acionado, recupera vida. 3 slots
