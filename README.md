@@ -2,12 +2,15 @@
 
 ## membros:
 
-- Victor Amorim Padilha                 <vap4>
-- Caio Leon Almeida Andrade Michalewicz <claam>
-- Enzo Nogueira Sarafim                 <ens2>
-- Leonardo Portela Chiu                 <lpc4>
-- Pedro Henrique Borges Ribeiro         <phbr>
-- Gustavo Antônio Linhares Sales        <gals2>
+|  nome                                   | email |
+|-----------------------------------------|-------|
+| Victor Amorim Padilha                   | vap4 |
+| Caio Leon Almeida Andrade Michalewicz   | claam |
+| Enzo Nogueira Sarafim                   | ens2 |
+| Leonardo Portela Chiu                   | lpc4 |
+| Pedro Henrique Borges Ribeiro           | phbr |
+| Gustavo Antônio Linhares Sales          | gals2 |
+
 
 ## syllabus
 
