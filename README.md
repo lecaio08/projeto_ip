@@ -1,4 +1,4 @@
-# <img width="1024" height="768" alt="image" src="assets/donk.ico" /> donkey kong
+# <img width="48" height="48" alt="image" src="assets/images/donk.ico" /> donkey kong
 
 ## membros:
 
