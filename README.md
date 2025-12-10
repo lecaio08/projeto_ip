@@ -25,6 +25,19 @@
     - pontuação: máximo de 60 segundos, o tempo restante é multiplicado por 1000
 
 ## arquitetura
+```bash
+projeto/
+├── assets
+│   └── fonts
+│       └── font.ttf
+├── game.py
+├── interface.py
+├── main.py
+├── settings.py
+├── sprites_items.py
+├── sprites_player.py
+└── sprites_world.py
+```
 
 ## screenshots
 - prototipo: <br />
