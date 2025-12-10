@@ -28,7 +28,11 @@
 
 ## screenshots
 
-## libs/framework
+## framework e libs
+- [PyGame](https://www.pygame.org/docs/)
+  - o PyGame é o nosso framework principal pois ele abstrai diversas complexidades, tem uma síntaxe simples e é intuitivo para iniciantes, sendo ideal para esse tipo de projeto
+- [Os](https://docs.python.org/3/library/os.html)
+- [Sys](https://docs.python.org/3/library/sys.html)
 
 ## divisão
 
@@ -36,3 +40,7 @@
 
 ## conceitos trabalhos
 
+<br>
+<p align="center">
+    <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMG1qbTBwamJhNnhuMW4wazF0eDE4aWx2aDU0OXdlNXBzNmRmY3hrMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/MuahUV0BEfitsFnUex/giphy.gif" align="center">
+</p>
