@@ -9,7 +9,7 @@
 | Enzo Nogueira Sarafim                   | ens2@cin.ufpe.br |
 | Leonardo Portela Chiu                   | lpc4@cin.ufpe.br |
 | Pedro Henrique Borges Ribeiro           | phbr@cin.ufpe.br |
-| Gustavo Antônio Linhares Sales          | gals2@cin.ufpe.br |
+| [Gustavo Antônio Linhares Sales](https://linkedin.com/in/gustavo-linhares0xf)          | gals2@cin.ufpe.br |
 
 
 ## syllabus
