@@ -44,6 +44,14 @@
 
 - orientação a objetos
 
+## instalação (linux)
+```bash
+linus@torvalds:~$ git clone https://github.com/lecaio08/projeto_ip.git
+linus@torvalds:~$ cd projeto_ip/
+linus@torvalds:~/projeto_ip$ pip3 install -r requirements.txt --break-system-packages
+linus@torvalds:~/projeto_ip$ python3 main.py 
+````
+
 <br>
 <p align="center">
     <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMG1qbTBwamJhNnhuMW4wazF0eDE4aWx2aDU0OXdlNXBzNmRmY3hrMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/MuahUV0BEfitsFnUex/giphy.gif" align="center">
