@@ -4,12 +4,12 @@
 
 |  nome                                   | email |
 |-----------------------------------------|-------|
-| Victor Amorim Padilha                   | vap4 |
-| Caio Leon Almeida Andrade Michalewicz   | claam |
-| Enzo Nogueira Sarafim                   | ens2 |
-| Leonardo Portela Chiu                   | lpc4 |
-| Pedro Henrique Borges Ribeiro           | phbr |
-| Gustavo Antônio Linhares Sales          | gals2 |
+| Victor Amorim Padilha                   | vap4@cin.ufpe.br |
+| Caio Leon Almeida Andrade Michalewicz   | claam@cin.ufpe.br |
+| Enzo Nogueira Sarafim                   | ens2@cin.ufpe.br |
+| Leonardo Portela Chiu                   | lpc4@cin.ufpe.br |
+| Pedro Henrique Borges Ribeiro           | phbr@cin.ufpe.br |
+| Gustavo Antônio Linhares Sales          | gals2@cin.ufpe.br |
 
 
 ## syllabus
