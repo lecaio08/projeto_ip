@@ -27,18 +27,25 @@
 ## arquitetura
 
 ## screenshots
+- prototipo: <br />
+    <img width="920" height="677" alt="image" src="https://github.com/user-attachments/assets/b7c9a9d0-0192-4911-ae4d-31037d1fcc4a" />
+
 
 ## framework e libs
 - [PyGame](https://www.pygame.org/docs/)
   - o PyGame é o nosso framework principal pois ele abstrai diversas complexidades, tem uma síntaxe simples e é intuitivo para iniciantes, sendo ideal para esse tipo de projeto
 - [Os](https://docs.python.org/3/library/os.html)
+  - essa lib built-in foi utilizada para carregar o arquivo .ttf, para conseguirmos customizar a fonte do jogo
 - [Sys](https://docs.python.org/3/library/sys.html)
+  - essa lib built-in foi utiilzada apenas para possibilitar o encerramento do programa por parte do usuário
 
 ## divisão
 
 - 
 
 ## conceitos trabalhos
+
+- orientação a objetos
 
 <br>
 <p align="center">
