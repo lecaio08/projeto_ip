@@ -62,6 +62,7 @@ class UI:
             "Mover: Setas Direcionais",
             "Pular: [BARRA DE ESPAÇO]",
             "Subir/Descer: Setas Cima/Baixo",
+            "[ESC]: Pausar o jogo",
             "",
             "--- ITENS ---",
             "Maçã: Pressione [A] para curar",
