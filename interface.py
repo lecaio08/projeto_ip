@@ -13,7 +13,6 @@ class UI:
             self.font_path = pygame.font.match_font('arial')
 
     def draw_text(self, text, size, color, x, y, align='center'):
-
         try:
             font = pygame.font.Font(self.font_path, size)
         except:
@@ -56,15 +55,23 @@ class UI:
 
     def screen_settings(self):
         self.screen.fill(BLACK)
-        self.draw_text("Configurações", 40, YELLOW, WIDTH/2, 50)
+        self.draw_text("Configurações & Ajuda", 40, YELLOW, WIDTH/2, 50)
+        
         instrucoes = [
+            "--- CONTROLES ---",
+            "Mover: Setas Direcionais",
+            "Pular: [BARRA DE ESPAÇO]",
+            "Subir/Descer: Setas Cima/Baixo",
+            "",
             "--- ITENS ---",
             "Maçã: Pressione [A] para curar",
             "Martelo: Quebra Barris",
             "Moeda: Pontuação Extra"
         ]
+        
         for i, linha in enumerate(instrucoes):
-            self.draw_text(linha, 20, WHITE, WIDTH/2, 150 + (i * 30))
+            self.draw_text(linha, 20, WHITE, WIDTH/2, 130 + (i * 35))
+            
         self.draw_text("Pressione [ESC] ou [ENTER] para voltar", 18, GRAY, WIDTH/2, HEIGHT - 50)
         pygame.display.flip()
         self._wait_key(['RETURN', 'ESCAPE'])
@@ -75,7 +82,7 @@ class UI:
         overlay.set_alpha(150)
         overlay.fill(BLACK)
         self.screen.blit(overlay, (0,0))
-        self.draw_text("Pausar", 48, YELLOW, WIDTH/2, HEIGHT/3)
+        self.draw_text("Pausado", 48, YELLOW, WIDTH/2, HEIGHT/3)
         self.draw_text("[C] Continuar", 25, WHITE, WIDTH/2, HEIGHT/2)
         self.draw_text("[S] Sair", 25, RED, WIDTH/2, HEIGHT/2 + 50)
         pygame.display.flip()
@@ -89,14 +96,20 @@ class UI:
                     
     def screen_gameover(self, won, coins, start_time):
         self.screen.fill(BLACK)
-        title = "Você venceu!" if won else "WASTED!"
+        title = "Você venceu!" if won else "GAME OVER!"
         color = GREEN if won else RED
+        
         remaining = max(0, GAME_DURATION - ((pygame.time.get_ticks() - start_time) / 1000))
         score_base = int(remaining * 1000)
         bonus_moedas = 1 + (coins * 0.05)
-        final_score = int(score_base * bonus_moedas)
+        
+        if not won:
+            final_score = int(coins * 100)
+        else:
+            final_score = int(score_base * bonus_moedas)
+            
         self.draw_text(title, 48, color, WIDTH/2, HEIGHT/4)
-        self.draw_text(f"Pontuação: {final_score}", 36, YELLOW, WIDTH/2, HEIGHT/2)
+        self.draw_text(f"Pontuação Final: {final_score}", 36, YELLOW, WIDTH/2, HEIGHT/2)
         self.draw_text("Enter para Menu", 18, WHITE, WIDTH/2, HEIGHT*3/4)
         pygame.display.flip()
         self._wait_key(['RETURN'])
