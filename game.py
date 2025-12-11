@@ -58,13 +58,18 @@ class Game:
 
     def update(self):
         self.all_sprites.update()
+        
         if self.player.vel.y > 0 and not self.player.on_ladder:
             hits = pygame.sprite.spritecollide(self.player, self.platforms, False)
             if hits:
-                bot = hits[0]
-                if self.player.pos.y           < bot.rect.centery:
-                    self.player.pos.y          = bot.rect.top
-                    self.player.vel.y          = 0
+                lowest = hits[0]
+                for hit in hits:
+                    if hit.rect.bottom > lowest.rect.bottom:
+                        lowest = hit
+                
+                if self.player.pos.y < lowest.rect.bottom:
+                    self.player.pos.y      = lowest.rect.top
+                    self.player.vel.y      = 0
                     self.player.rect.midbottom = self.player.pos
 
         if not self.player.invulnerable:
@@ -110,6 +115,10 @@ class Game:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p or event.key == pygame.K_ESCAPE:
                     self.state = 'PAUSE'; self.playing = False
+                
+                if event.key == pygame.K_SPACE:
+                    self.player.jump()
+
                 if event.key == pygame.K_a:
                     if self.player.lives < 3 and self.player.apples > 0:
                         self.player.lives += 1
