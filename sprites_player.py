@@ -16,48 +16,62 @@ class Player(pygame.sprite.Sprite):
         self.vel             = vec(0, 0)
         self.acc             = vec(0, 0)
         self.lives           = 3
-        self.apples          = 0      
+        self.apples          = 0       
         self.has_hammer      = False
         self.on_ladder       = False
         self.invulnerable    = False 
         self.last_hit        = 0
 
     def jump(self):
+        if self.on_ladder:
+            return
+
         self.rect.y += 2
-        hits         = pygame.sprite.spritecollide(self, self.game.platforms, False)
+        hits = pygame.sprite.spritecollide(self, self.game.platforms, False)
         self.rect.y -= 2
-        if hits and not self.on_ladder:
+        
+        if hits:
             self.vel.y = PLAYER_JUMP_POWER
 
     def update(self):
-
         self.acc = vec(0, PLAYER_GRAVITY)
         keys     = pygame.key.get_pressed()
         
-        if keys[pygame.K_LEFT]: self.acc.x = -PLAYER_ACC
+        if keys[pygame.K_LEFT]:  self.acc.x = -PLAYER_ACC
         if keys[pygame.K_RIGHT]: self.acc.x = PLAYER_ACC
 
-        ladder_hits = pygame.sprite.spritecollide(self, self.game.ladders, False)
+        check_rect = self.rect.move(0, 10) 
+        
+        ladder_hits = []
+        for ladder in self.game.ladders:
+            if check_rect.colliderect(ladder.rect):
+                ladder_hits.append(ladder)
+
         if ladder_hits:
             if keys[pygame.K_UP] or keys[pygame.K_DOWN]:
                 self.on_ladder = True
-                self.pos.x     = ladder_hits[0].rect.centerx
                 self.vel.x     = 0
 
         if self.on_ladder:
-            self.acc.y                           = 0
-            if keys[pygame.K_UP]: self.vel.y     = -CLIMB_SPEED
-            elif keys[pygame.K_DOWN]: self.vel.y = CLIMB_SPEED
-            else: self.vel.y                     = 0
-            if not ladder_hits: self.on_ladder   = False
-       
+            self.acc.y = 0
+            if keys[pygame.K_UP]: 
+                self.vel.y = -CLIMB_SPEED
+            elif keys[pygame.K_DOWN]: 
+                self.vel.y = CLIMB_SPEED
+            else: 
+                self.vel.y = 0
+            
+            if not ladder_hits: 
+                self.on_ladder = False
+        
         self.acc.x += self.vel.x * PLAYER_FRICTION
         self.vel   += self.acc
         self.pos   += self.vel + 0.5 * self.acc
         
         if self.pos.x > WIDTH: self.pos.x = WIDTH
-        if self.pos.x < 0: self.pos.x     = 0
-        self.rect.midbottom               = self.pos
+        if self.pos.x < 0:     self.pos.x = 0
+        
+        self.rect.midbottom = self.pos
         
         if self.invulnerable:
             if pygame.time.get_ticks() - self.last_hit > 2000: 
