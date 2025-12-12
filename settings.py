@@ -1,16 +1,18 @@
 import pygame
 import os
 
-BASE_DIR   = os.path.dirname(__file__)
-ASSETS_DIR = os.path.join(BASE_DIR, 'assets')
-FONTS_DIR  = os.path.join(ASSETS_DIR, 'fonts')
+# carregar a fonte
+BASE_DIR   = os.path.dirname(__file__)         # load do diretório do projeto
+ASSETS_DIR = os.path.join(BASE_DIR, 'assets')  
+FONTS_DIR  = os.path.join(ASSETS_DIR, 'fonts') # carrega o subdiretorio assets/fonts
 FONT_NAME  = "font.ttf" 
 
-WIDTH, HEIGHT     = 800, 600
+# setando algumas variáveis que serão usadas em vários trechos do código, pra evitar ficar repetindo toda hora
+WIDTH, HEIGHT     = 1080, 720
 FPS               = 60
 TITLE             = "Donkey Kong: Prototipo do Projeto"
 GAME_DURATION     = 60
-WHITE             = (255, 255, 255)
+WHITE             = (255, 255, 255) # código RGB
 BLACK             = (0, 0, 0)
 RED               = (220, 20, 60)
 GOLD              = (255, 215, 0)
