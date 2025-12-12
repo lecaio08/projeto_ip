@@ -1,4 +1,3 @@
-# aqui definimos a máquina de estados
 import pygame
 import sys
 # importando a classe principal Game, onde fora implementada a lógica do jogo
@@ -45,3 +44,4 @@ while g.running:
 # fim do loop: mata o processo com o sys.exit()
 pygame.quit()
 sys.exit()
+
