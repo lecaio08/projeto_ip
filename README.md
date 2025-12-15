@@ -1,15 +1,16 @@
 # <img width="48" height="48" alt="image" src="assets/images/donk.ico" /> donkey kong
 
-## membros:
+## membros e suas responsabilidades:
 
-|  nome                                   | email |
-|-----------------------------------------|-------|
-| Victor Amorim Padilha                   | vap4@cin.ufpe.br |
-| Caio Leon Almeida Andrade Michalewicz   | claam@cin.ufpe.br |
-| Enzo Nogueira Sarafim                   | ens2@cin.ufpe.br |
-| Leonardo Portela Chiu                   | lpc4@cin.ufpe.br |
-| Pedro Henrique Borges Ribeiro           | phbr@cin.ufpe.br |
-| [Gustavo Antônio Linhares Sales](https://linkedin.com/in/gustavo-linhares0xf)          | gals2@cin.ufpe.br |
+| nome | email | responsabilidades |
+|-----------------------------------------|----------------------|-------------------------------------------------------------|
+| Victor Amorim Padilha | vap4@cin.ufpe.br | Correção de bugs e implementação de features |
+| Caio Leon Almeida Andrade Michalewicz | claam@cin.ufpe.br | Correção de bugs |
+| Enzo Nogueira Sarafim | ens2@cin.ufpe.br | Arte |
+| Leonardo Portela Chiu | lpc4@cin.ufpe.br | Arte |
+| Pedro Henrique Borges Ribeiro | phbr@cin.ufpe.br | Coordenação criativa |
+| [Gustavo Antônio Linhares Sales](https://linkedin.com/in/gustavo-linhares0xf) | gals2@cin.ufpe.br | Implementação dos requisitos mínimos, slides e relatório |
+
 
 
 ## syllabus
@@ -56,6 +57,12 @@ projeto/
 ## conceitos trabalhos
 
 - orientação a objetos
+- modularização
+
+## desafios e erros
+- O maior erro cometido durante a execução do projeto foi tentar dividir os trabalhos antes de começar a estudar orientação a objetos e aprender a utilizar o PyGame. Lidamos com isso estudando de forma conjunta, compartilhando o conhecimento e já colocando-os em prática, começando a implementar os requisitos mínimos do projeto.
+- O maior desafio enfrentado pelo projeto foi conciliar aprender orientação a objetos e a como utilizar os frameworks em meio à realização de duas provas que demandam horas de estudo e também nota (pra não depender de prova final). Lidamos com isso deixando o gerenciamento do projeto nas mãos de quem podia dedicar menos tempo pra preparação para as provas.
+- Aprendemos que a humildade pra reconhecer o que não sabe é essencial em qualquer tipo de projeto. Além disso, aprendemos que trabalhar em grupo demanda, acima de tudo, saber lidar com pessoas e que o compartilhamento de conhecimento é o pilar pra um bom desenvolvimento em conjunto.
 
 ## instalação (linux)
 ```bash
@@ -64,8 +71,3 @@ linus@torvalds:~$ cd projeto_ip/
 linus@torvalds:~/projeto_ip$ pip3 install -r requirements.txt --break-system-packages
 linus@torvalds:~/projeto_ip$ python3 main.py 
 ````
-
-<br>
-<p align="center">
-    <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMG1qbTBwamJhNnhuMW4wazF0eDE4aWx2aDU0OXdlNXBzNmRmY3hrMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/MuahUV0BEfitsFnUex/giphy.gif" align="center">
-</p>
