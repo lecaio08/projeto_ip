@@ -52,12 +52,18 @@ projeto/
 
 ## divisão
 
-- 
+- Gustavo: implementação dos requisitos mínimos, slides e relatório
+- Victor: correção de bugs e implementação de features
+- Caio: correção de bugs
+- Pedro: coordenação criativa
+- Leonardo: arte
+- Enzo: arte
 
 ## conceitos trabalhos
 
-- orientação a objetos
-- modularização
+- Orientação a objetos
+- Modularização
+- Bibliotecas em Python
 
 ## desafios e erros
 - O maior erro cometido durante a execução do projeto foi tentar dividir os trabalhos antes de começar a estudar orientação a objetos e aprender a utilizar o PyGame. Lidamos com isso estudando de forma conjunta, compartilhando o conhecimento e já colocando-os em prática, começando a implementar os requisitos mínimos do projeto.
