@@ -4,7 +4,7 @@ from settings import *
 # recurso do PyGame pra facilitar o uso de vetores. ref.: https://www.pygame.org/docs/ref/math.html#pygame.math.Vector2
 vec = pygame.math.Vector2
 
-# definindo a classe Player, que herda a classe Sprite do PyGame, ela nos permite criar o jogador
+# definindo a classe Player, que herda a classe Sprite do PyGame. aqui definiremos a lógica do jogador
 class Player(pygame.sprite.Sprite):
 
     # definindo a constructor da classe, passando as coordenadas 
