@@ -7,11 +7,10 @@ vec = pygame.math.Vector2
 # definindo a classe Player, que herda a classe Sprite do PyGame. aqui definiremos a lógica do jogador
 class Player(pygame.sprite.Sprite):
 
-    # definindo a constructor da classe, passando as coordenadas 
+    # definindo a constructor da classe, passando as coordenadas do jogador
     def __init__(self, game, x, y):
         # inicializa o Sprite base do Pygame
         super().__init__()
-        
         # referência ao objeto da classe Game
         self.game = game
         # cria um quadrado amarelo de 30x40 
