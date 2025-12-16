@@ -30,15 +30,29 @@ class Game:
         self.run()
 
     def _create_level(self):
+
+        # Lugar de inicialização do personagem controlável 
         self._add(Platform(0, HEIGHT-40, WIDTH, 40), [self.platforms])
         self.player = Player(self, 100, HEIGHT-45)
         self.all_sprites.add(self.player)
-        self._add(Platform(0, HEIGHT-200, WIDTH-150, 20), [self.platforms])
-        self._add(Platform(150, HEIGHT-400, WIDTH-150, 20), [self.platforms])
+
+        # Plataformas
+        self._add(Platform(0, HEIGHT-200, WIDTH-150, 20), [self.platforms]) # Plataforma inferior
+        self._add(Platform(150, HEIGHT-400, WIDTH-150, 20), [self.platforms]) # Plataforma superior
+
+        # Escadas
         self._add(Ladder(WIDTH-200, HEIGHT-200, 160), [self.ladders])
         self._add(Ladder(200, HEIGHT-400, 200), [self.ladders])
-        self._add(Goal(50, HEIGHT-550), [self.goals])
-        self._add(Barrel(300, HEIGHT-215, 20, 600), [self.enemies])
+
+        # Posição do objetivo 
+        self._add(Goal(950, HEIGHT-550), [self.goals])
+
+        # Inimigos  
+        self._add(Barrel(100, HEIGHT-215, 20, 500), [self.enemies])
+        self._add(Barrel(170, HEIGHT-415, 150, 900), [self.enemies])
+        self._add(Barrel(800, HEIGHT-415, 150, 900), [self.enemies])
+
+        # Itens
         self._add(Item(600, HEIGHT-70, 'coin'), [self.items])
         self._add(Item(400, HEIGHT-430, 'hammer'), [self.items])
         self._add(Item(200, HEIGHT-70, 'apple'), [self.items])
