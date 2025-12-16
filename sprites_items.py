@@ -1,7 +1,7 @@
 import pygame
 from settings import *
 
-# definindo a classe Item, que herda a classe Sprite do PyGame. ela nos permite criar os itens do jogo
+# definindo a classe Item, que herda a classe Sprite do PyGame, aqui definiremos a lógica dos itens a serem pegos
 class Item(pygame.sprite.Sprite):
     
     # definindo a constructor da classe, ao criar um item, passamos suas coordenadas e seeu tipo
