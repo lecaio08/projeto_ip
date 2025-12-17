@@ -1,33 +1,33 @@
-import pygame
-from settings import *
-from sprites_player import Player
-from sprites_world import Platform, Ladder, Goal, Barrel
-from sprites_items import Item
-from interface import UI
+import pygame                                              # biblioteca principal do pygame
+from settings import *                                     # configuracoes globais
+from sprites_player import Player                          # personagem do jogador
+from sprites_world import Platform, Ladder, Goal, Barrel   # cenários e inimigos
+from sprites_items import Item                             # itens coletáveis
+from interface import UI                                   # interface gráfica (HUD)
 
 class Game:
 
     def __init__(self):
-        pygame.init()
-        self.screen  = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.init() # inicializa o pygame 
+        self.screen  = pygame.display.set_mode((WIDTH, HEIGHT)) # cria a janela
         pygame.display.set_caption(TITLE)
-        self.clock   = pygame.time.Clock()
+        self.clock   = pygame.time.Clock() # define fps
         self.running = True
-        self.state   = 'MENU'
-        self.ui      = UI(self.screen)
-
+        self.state   = 'MENU' # define o estado inicial
+        self.ui      = UI(self.screen)  # cria a interface gráfica
+            
     def new_game(self):
         self.all_sprites = pygame.sprite.Group()
         self.platforms   = pygame.sprite.Group()
         self.ladders     = pygame.sprite.Group()
         self.items       = pygame.sprite.Group()
         self.enemies     = pygame.sprite.Group() 
-        self.goals       = pygame.sprite.Group()
-        self.coins       = 0
+        self.goals       = pygame.sprite.Group() # cria todos os grupos de sprites
+        self.coins       = 0  # zera o contador de moedas
         self.start_time  = pygame.time.get_ticks()
-        self.won         = False
-        self._create_level()
-        self.run()
+        self.won         = False # reseta a condição de vitória
+        self._create_level() # cria o mapa
+        self.run() # entra no loop da fase
 
     def _create_level(self):
 
@@ -90,16 +90,16 @@ class Game:
         self._add(Item(230, HEIGHT-410, 'coin'), [self.items])
 
     def _add(self, sprite, groups):
-        self.all_sprites.add(sprite)
-        for g in groups: g.add(sprite)
+        self.all_sprites.add(sprite) # garante que todo sprite entre em sprite
+        for g in groups: g.add(sprite)  # adiciona sprite aos grupos específicos
 
-    def run(self):
+    def run(self): # responsável por manter o jogo rodando
         self.playing = True
-        while self.playing:
-            self.clock.tick(FPS)
-            self.events()
-            self.update()
-            self.draw()
+        while self.playing: # enquanto o jogo está rodando:
+            self.clock.tick(FPS) # controla o fps
+            self.events() # lê as entradas do jogador
+            self.update() # atualiza a lógica
+            self.draw()   # 'desenha' tudo
 
     def update(self):
         self.all_sprites.update()
@@ -110,67 +110,68 @@ class Game:
                 lowest = hits[0]
                 for hit in hits:
                     if hit.rect.bottom > lowest.rect.bottom:
-                        lowest = hit
-                
+                        lowest = hit 
+                        
                 if self.player.pos.y < lowest.rect.bottom:
                     self.player.pos.y      = lowest.rect.top
                     self.player.vel.y      = 0
-                    self.player.rect.midbottom = self.player.pos
+                    self.player.rect.midbottom = self.player.pos # checa contato com as plataformas para ele não atravessar elas
 
         if not self.player.invulnerable:
             hit_enemies = pygame.sprite.spritecollide(self.player, self.enemies, False)
-            if hit_enemies:
+            if hit_enemies: # checa contato com os inimigos
                 if self.player.has_hammer:
-                    hit_enemies[0].kill()
+                    hit_enemies[0].kill() # se tiver o martelo mata o inimigo
                 else:
-                    self.player.lives       -= 1
+                    self.player.lives       -= 1 # senão, erde vida e fica invulnerável por um tempo
                     self.player.invulnerable = True
                     self.player.last_hit     = pygame.time.get_ticks()
                     self.player.vel.y        = -10 
                     
-                    if self.player.lives <= 0:
+                    if self.player.lives <= 0: # se a vida ficar menor ou igual a zero, termina o jogo
                         self.playing = False
                         self.state   = 'GAMEOVER'
                         self.won     = False
 
         hits = pygame.sprite.spritecollide(self.player, self.items, False)
         for item in hits:
-            if item.type == 'coin':
+            if item.type == 'coin': # se ele entrar em contato com uma moeda, aumenta o contador da moeda e ela desaparece
                 self.coins += 1
                 item.kill()
-            elif item.type == 'hammer':
+            elif item.type == 'hammer': # mesma coisa com o martelo
                 self.player.has_hammer = True
                 item.kill()
-            elif item.type == 'apple':
+            elif item.type == 'apple': # e com a maçã
                 if self.player.apples < 3:
                     self.player.apples += 1
                     item.kill()
 
-        if pygame.sprite.spritecollide(self.player, self.goals, False):
+        if pygame.sprite.spritecollide(self.player, self.goals, False): # se ele chegar no objetivo, vai para a tela de game over parabenizando pela vitória
             self.won = True; self.playing = False; self.state = 'GAMEOVER'
         
-        if (pygame.time.get_ticks() - self.start_time)/1000 > GAME_DURATION:
+        if (pygame.time.get_ticks() - self.start_time)/1000 > GAME_DURATION: # se o tempo acabar, acaba o jogo
             self.playing = False; self.state = 'GAMEOVER'
 
     def events(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: 
+        for event in pygame.event.get(): # percorre todas os eventos do sistema
+            if event.type == pygame.QUIT:  # permite o o usuário a clicar no X da tela para fecha o jogo
                 self.playing = False; self.running = False
             
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN: # se o usuário apertar a tecla 'esc' ou a tecla 'p', ele pausa o jogo
                 if event.key == pygame.K_p or event.key == pygame.K_ESCAPE:
                     self.state = 'PAUSE'; self.playing = False
                 
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_SPACE: # se o usuário apertar a tecla de espaço, ele pula
                     self.player.jump()
 
-                if event.key == pygame.K_a:
+                if event.key == pygame.K_a: # se o usuário apertar a tecla 'a', ele usa uma maçã
                     if self.player.lives < 3 and self.player.apples > 0:
                         self.player.lives += 1
                         self.player.apples -= 1
 
     def draw(self):
-        self.screen.fill(BGCOLOR)
-        self.all_sprites.draw(self.screen)
-        self.ui.draw_hud(self.player, self.coins, self.start_time)
-        pygame.display.flip()
+        self.screen.fill(BGCOLOR) # limpa a tela com a cor de fundo
+        self.all_sprites.draw(self.screen) # desenha todos os prites do jogo
+        self.ui.draw_hud(self.player, self.coins, self.start_time) # desenha a interface (HUD)
+        pygame.display.flip() # atualiza a tela
+
