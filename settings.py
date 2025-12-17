@@ -33,5 +33,5 @@ BGCOLOR           = (20, 30, 50)
 PLAYER_ACC        = 0.5     # Movimentação do jogador 
 PLAYER_FRICTION   = -0.12   # Atrito de desaceleração do jogador
 PLAYER_GRAVITY    = 0.8     # Aceleração da gravidade
-PLAYER_JUMP_POWER = -15     # Altura do salto 
+PLAYER_JUMP_POWER = -13     # Altura do salto 
 CLIMB_SPEED       = 4       # Velocidade de escalada
