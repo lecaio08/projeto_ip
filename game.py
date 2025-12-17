@@ -123,7 +123,7 @@ class Game:
                 if self.player.has_hammer:
                     hit_enemies[0].kill() # se tiver o martelo mata o inimigo
                 else:
-                    self.player.lives       -= 1 # senão, erde vida e fica invulnerável por um tempo
+                    self.player.lives       -= 1 # senão, perde vida e fica invulnerável por um tempo
                     self.player.invulnerable = True
                     self.player.last_hit     = pygame.time.get_ticks()
                     self.player.vel.y        = -10 
@@ -174,4 +174,5 @@ class Game:
         self.all_sprites.draw(self.screen) # desenha todos os prites do jogo
         self.ui.draw_hud(self.player, self.coins, self.start_time) # desenha a interface (HUD)
         pygame.display.flip() # atualiza a tela
+
 
