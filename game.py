@@ -158,7 +158,7 @@ class Game:
                 self.playing = False; self.running = False
             
             if event.type == pygame.KEYDOWN: # se o usuário apertar a tecla 'esc' ou a tecla 'p', ele pausa o jogo
-                if event.key == pygame.K_p or event.key == pygame.K_ESCAPE:
+                if event.key == pygame.K_p:
                     self.state = 'PAUSE'; self.playing = False
                 
                 if event.key == pygame.K_SPACE: # se o usuário apertar a tecla de espaço, ele pula
