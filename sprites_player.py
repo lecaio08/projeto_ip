@@ -132,7 +132,7 @@ class Player(pygame.sprite.Sprite):
             self.facing_right = False
 
         if abs(self.vel.x) > 0.5 and not self.on_ladder:
-            # vvançar o índice do frame
+            # avançar o índice do frame
             self.current_frame += self.animation_speed
             if self.current_frame >= len(self.walk_frames):
                 self.current_frame = 0
@@ -147,16 +147,19 @@ class Player(pygame.sprite.Sprite):
         # atualiza a hitbox p/ a nova posição calculada
         self.rect.midbottom = self.pos
         
-        # se o jogador for acertado pelo barril, deixá-lo ivulnerável por 2s (efeito visual: levemente translucido)
+        # define o alpha padrão como 255 (totalmente opaco) para garantir que limpamos estados anteriores
+        alpha_atual = 255
+
         if self.invulnerable:
+            # verifica se o tempo de invulnerabilidade acabou
             if pygame.time.get_ticks() - self.last_hit > 2000: 
                 self.invulnerable = False
-                self.image.set_alpha(255) # volta a ficar totalmente opaco
             else:
-                # jogador pisca após levar dano
+                # se ainda estiver invulnerável, calcula a piscada
                 if (pygame.time.get_ticks() // 200) % 2 == 0:
-                    self.image.set_alpha(100) # translucido
-                else:
-                    self.image.set_alpha(255) # opaco
+                    alpha_atual = 100 # define alpha como translucido
+        
+        # aplica o alpha calculado na imagem atual (seja ela idle ou walk)
+        self.image.set_alpha(alpha_atual)
 
 
