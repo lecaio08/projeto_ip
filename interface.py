@@ -53,11 +53,11 @@ class UI:
         pygame.display.flip() # atualiza
         return self._wait_key(['RETURN', 'o']) # aguarda a entrada do jogador
 
-    def screen_settings(self): 
-        self.screen.fill(BLACK)
-        self.draw_text("Configurações & Ajuda", 40, YELLOW, WIDTH/2, 50)
+    def screen_settings(self): # exibe a tela de configurações do jogo
+        self.screen.fill(BLACK) # limpa a tela
+        self.draw_text("Configurações & Ajuda", 40, YELLOW, WIDTH/2, 50) # escreve no topo "Configurações & Ajuda"
         
-        instrucoes = [
+        instrucoes = [ # lista de instruções com as strings que serão utlizadas no texto
             "--- CONTROLES ---",
             "Mover: Setas Direcionais",
             "Pular: [BARRA DE ESPAÇO]",
@@ -71,58 +71,57 @@ class UI:
         ]
         
         for i, linha in enumerate(instrucoes):
-            self.draw_text(linha, 20, WHITE, WIDTH/2, 130 + (i * 35))
+            self.draw_text(linha, 20, WHITE, WIDTH/2, 130 + (i * 35)) # esse cálculo oferece a altura, separando cada linha por 35 pixels de forma uniforme
             
-        self.draw_text("Pressione [ESC] ou [ENTER] para voltar", 18, GRAY, WIDTH/2, HEIGHT - 50)
+        self.draw_text("Pressione [ESC] ou [ENTER] para voltar", 18, GRAY, WIDTH/2, HEIGHT - 50) # instruções sobre os comandos de saída
         pygame.display.flip()
-        self._wait_key(['RETURN', 'ESCAPE'])
-        return 'MENU'
+        self._wait_key(['RETURN', 'ESCAPE']) # esperando o 'RETURN' (Enter) ou 'ESCAPE' (Esc) 
+        return 'MENU' # indica que o loop principal vai voltar para a tela de menu do jogo
 
-    def screen_pause(self):
-        overlay = pygame.Surface((WIDTH, HEIGHT))
-        overlay.set_alpha(150)
+    def screen_pause(self): # exibe a tela de 'pause' do jogo
+        overlay = pygame.Surface((WIDTH, HEIGHT)) # cria uma nova camada do tamanho da tela
+        overlay.set_alpha(150) # define o grau de transparência, sendo 0 invisível e 255 completamente visível, o 150 deixa o fundo do jogo transparente, porém um pouco escuro
         overlay.fill(BLACK)
-        self.screen.blit(overlay, (0,0))
-        self.draw_text("Pausado", 48, YELLOW, WIDTH/2, HEIGHT/3)
-        self.draw_text("[C] Continuar", 25, WHITE, WIDTH/2, HEIGHT/2)
-        self.draw_text("[S] Sair", 25, RED, WIDTH/2, HEIGHT/2 + 50)
+        self.screen.blit(overlay, (0,0)) # desenha a transparência setada por cima do jogo "freezado"
+        self.draw_text("Pausado", 48, YELLOW, WIDTH/2, HEIGHT/3) # exibe o texto "Pausado"
+        self.draw_text("[C] Continuar", 25, WHITE, WIDTH/2, HEIGHT/2) # exibe o texto "[C] Continuar"
+        self.draw_text("[S] Sair", 25, RED, WIDTH/2, HEIGHT/2 + 50) # exibe o texto "[S] Sair"
         pygame.display.flip()
         waiting = True
-        while waiting:
+        while waiting: # loop esperando as teclas
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: return 'QUIT'
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_c: return 'CONTINUE'
-                    if event.key == pygame.K_s: return 'MENU'
+                    if event.key == pygame.K_c: return 'CONTINUE'  # se apertar "C" o jogo retoma
+                    if event.key == pygame.K_s: return 'MENU' # se apertar "S" o jogo para e vai para o menu
                     
-    def screen_gameover(self, won, coins, start_time):
+    def screen_gameover(self, won, coins, start_time): # exibe a tela de game over
         self.screen.fill(BLACK)
-        title = "Você venceu!" if won else "GAME OVER!"
+        title = "Você venceu!" if won else "GAME OVER!" # condicionais para qual título mostrar
         color = GREEN if won else RED
         
-        remaining = max(0, GAME_DURATION - ((pygame.time.get_ticks() - start_time) / 1000))
-        score_base = int(remaining * 1000)
-        bonus_moedas = 1 + (coins * 0.05)
+        remaining = max(0, GAME_DURATION - ((pygame.time.get_ticks() - start_time) / 1000)) # calcula quanto tempo sobrou
+        score_base = int(remaining * 1000) # a pontuação será o tempo sobrado multiplicado por 1000
+        bonus_moedas = 1 + (coins * 0.05) # bônus por moeda coletada, a qual cada moeda aumenta a pontuação em 5%
         
         if not won:
-            final_score = int(coins * 100)
+            final_score = int(coins * 100) # se perdeu, o score será a quantidade das moedas vezes 100
         else:
-            final_score = int(score_base * bonus_moedas)
+            final_score = int(score_base * bonus_moedas) # se ganhou, o score será o score base do tempo e multiplica pelo bônus das moedas
             
-        self.draw_text(title, 48, color, WIDTH/2, HEIGHT/4)
-        self.draw_text(f"Pontuação Final: {final_score}", 36, YELLOW, WIDTH/2, HEIGHT/2)
-        self.draw_text("Enter para Menu", 18, WHITE, WIDTH/2, HEIGHT*3/4)
+        self.draw_text(title, 48, color, WIDTH/2, HEIGHT/4) # exibe a tela (se ganhou ou perdeu)
+        self.draw_text(f"Pontuação Final: {final_score}", 36, YELLOW, WIDTH/2, HEIGHT/2) # exibe a pontuação final
+        self.draw_text("Enter para Menu", 18, WHITE, WIDTH/2, HEIGHT*3/4) # exibe a tecla para voltar ao menu
         pygame.display.flip()
-        self._wait_key(['RETURN'])
+        self._wait_key(['RETURN']) # aguarda o jogador apertar ENTER
 
-    def _wait_key(self, keys):
+    def _wait_key(self, keys): # função de espera
         waiting = True
-        while waiting:
+        while waiting: # entra no loop até achar alguma ação
             for event in pygame.event.get():
-                if event.type == pygame.QUIT: return 'QUIT'
+                if event.type == pygame.QUIT: return 'QUIT' # verifica se o jogador "quitou" do jogo
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_RETURN and 'RETURN' in keys: return 'GAME'
-                    if event.key == pygame.K_o and 'o' in keys: return 'SETTINGS'
-                    if event.key == pygame.K_ESCAPE and 'ESCAPE' in keys: return 'ESCAPE'
+                    if event.key == pygame.K_RETURN and 'RETURN' in keys: return 'GAME' # verifica se o jogador quer entrar no jogo
+                    if event.key == pygame.K_o and 'o' in keys: return 'SETTINGS' # verifica se o jogador quer entrar no menu de configurações
+                    if event.key == pygame.K_ESCAPE and 'ESCAPE' in keys: return 'ESCAPE' # verifica se o jogador que está no menu de configurações quer voltar pro menu principal
         return None
-
