@@ -1,4 +1,6 @@
 import pygame
+import os
+from PIL import Image # Necessário instalar: pip install pillow
 from settings import *
 
 # recurso do PyGame pra facilitar o uso de vetores. ref.: https://www.pygame.org/docs/ref/math.html#pygame.math.Vector2
@@ -13,9 +15,30 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
         # referência ao objeto da classe Game
         self.game = game
-        # cria um quadrado amarelo de 30x40 
-        self.image = pygame.Surface((30, 40))
-        self.image.fill(PLAYER_COLOR)
+        
+        # -carrega o png do lyoda parado
+        self.img_idle = pygame.image.load(os.path.join(ASSETS_DIR, "gifs/Iyoda_parado.png")).convert_alpha()
+        self.img_idle = pygame.transform.scale(self.img_idle, (50, 58))
+
+        # carrega o gif do lyoda andando
+        self.walk_frames = []
+        path_walk        = os.path.join(ASSETS_DIR, "gifs/Iyoda_caminhando.gif")
+        gif              = Image.open(path_walk)
+        
+        for frame_index in range(gif.n_frames):
+            gif.seek(frame_index)
+            frame_rgba = gif.convert("RGBA")
+            # converter imagem do Pillow para Surface do Pygame
+            str_frame = frame_rgba.tobytes("raw", "RGBA")
+            pygame_surface = pygame.image.fromstring(str_frame, gif.size, "RGBA")
+            # redimensionar frame
+            pygame_surface = pygame.transform.scale(pygame_surface, (50, 58))
+            self.walk_frames.append(pygame_surface)
+            
+        self.current_frame = 0
+        self.animation_speed = 0.15 # velocidade p trocar os frames
+
+        self.image = self.img_idle
         # definindo o rect
         self.rect = self.image.get_rect()
         # define o spawn, canto inferior esquerdo
@@ -26,12 +49,13 @@ class Player(pygame.sprite.Sprite):
         self.acc = vec(0, 0)
         # definindo os atributos do jogador
         self.lives      = 3     # vidas atuais
-        self.apples     = 0     # inventário de maçãs
+        self.apples      = 0     # inventário de maçãs
         self.has_hammer = False # se pegou o martelo
         # definindo os estados do jogador
         self.on_ladder    = False # tá na escada?
         self.invulnerable = False # tá piscando após levar dano?
         self.last_hit     = 0     # marca o tempo (em ms) do último dano
+        self.facing_right = True  # variável auxiliar para direção do sprite
 
     # função pra fazer o personagem pular
     def jump(self):        
@@ -48,6 +72,7 @@ class Player(pygame.sprite.Sprite):
         # se houve colisão quando descemos 2 pixels, significa que estamos apoiados em algo, então, podemos pular!
         if hits:
             self.vel.y = PLAYER_JUMP_POWER # aplica força p cima
+            
     # loop principal do jogador
     def update(self): 
         # definindo a gravidade do jogo
@@ -100,6 +125,25 @@ class Player(pygame.sprite.Sprite):
         if self.pos.x > WIDTH: self.pos.x = WIDTH
         if self.pos.x < 0:     self.pos.x = 0
         
+        # animação do pillow
+        if self.vel.x > 0.1:
+            self.facing_right = True
+        elif self.vel.x < -0.1:
+            self.facing_right = False
+
+        if abs(self.vel.x) > 0.5 and not self.on_ladder:
+            # vvançar o índice do frame
+            self.current_frame += self.animation_speed
+            if self.current_frame >= len(self.walk_frames):
+                self.current_frame = 0
+            self.image = self.walk_frames[int(self.current_frame)]
+        else:
+            self.image = self.img_idle
+            self.current_frame = 0 # reseta animação ao parar
+
+        if not self.facing_right:
+            self.image = pygame.transform.flip(self.image, True, False)
+
         # atualiza a hitbox p/ a nova posição calculada
         self.rect.midbottom = self.pos
         
