@@ -18,7 +18,7 @@ class Item(pygame.sprite.Sprite):
         # dicionário pra definir o tamanho do gif de cada coletável
         sizes = {
             'apple': (40, 40),
-            'hammer': (100, 100), 
+            'hammer': (40, 40), 
             'coin': (30, 30)
         }
         
@@ -28,7 +28,7 @@ class Item(pygame.sprite.Sprite):
         # dicionario pro nome dos arquivos
         filenames = {
             'apple': "apple.png",
-            'hammer': "Serra_circular.gif",
+            'hammer': "martelo.png",
             'coin': "Moeda_IP.gif"
         }
         filename = filenames.get(type)
