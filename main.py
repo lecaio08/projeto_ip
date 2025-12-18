@@ -6,8 +6,14 @@ from game import Game
 # instanciando a classe Game
 g = Game()
 
+# iniciando o mixer de musica
+pygame.mixer.init()
+pygame.mixer.music.load("assets/music/soundtrack.mp3")
+pygame.mixer.music.set_volume(0.8)
+
 # chamando a propriedade running da nossa classe pra rodar o loop do jogo
 while g.running:
+    pygame.mixer.music.play() # toca a musica
     # verificamos a propridade state da nossa classe pra fazer funcionar a máquina de estados
     if g.state == 'MENU':
         # chama o menu e espera ação do jogador
@@ -44,4 +50,3 @@ while g.running:
 # fim do loop: mata o processo com o sys.exit()
 pygame.quit()
 sys.exit()
-
