@@ -159,3 +159,4 @@ class Player(pygame.sprite.Sprite):
                 else:
                     self.image.set_alpha(255) # opaco
 
+
