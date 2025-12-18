@@ -14,7 +14,7 @@ WIDTH, HEIGHT     = 1080, 720
 FPS               = 60
 
 # Características do jogo
-TITLE             = "Donkey Kong: Prototipo do Projeto"
+TITLE             = "Resgate ao Byte"
 GAME_DURATION     = 60
 
 # Coloração
