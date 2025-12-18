@@ -1,7 +1,7 @@
 import pygame            # biblioteca principal do pygame
 import os                # manipulação de caminhos e arquivos do sistema
 from PIL import Image    # biblioteca para manipulação de imagens e extração de frames de GIF
-from settings import *   # configuracoes globais
+from settings import * # configuracoes globais
 
 class UI:
 
@@ -32,7 +32,7 @@ class UI:
         # carregar o gif de pause
         self.pause_frames        = []
         self.current_pause_frame = 0
-        path_pause               = os.path.join(ASSETS_DIR, "gifs/pause.gif") # Certifique-se que o nome do arquivo está correto
+        path_pause               = os.path.join(ASSETS_DIR, "gifs/pause.gif")
         try:
             gif_p = Image.open(path_pause)
             for frame_index in range(gif_p.n_frames):
@@ -44,6 +44,31 @@ class UI:
                 self.pause_frames.append(surface)
         except:
             pass
+
+        path_settings = os.path.join(ASSETS_DIR, "gifs/configs.png")
+        try:
+            self.settings_bg = pygame.image.load(path_settings).convert_alpha()
+            self.settings_bg = pygame.transform.scale(self.settings_bg, (WIDTH, HEIGHT))
+        except:
+            self.settings_bg = None
+
+        self.win_frames = []
+        try:
+            gif_w = Image.open(os.path.join(ASSETS_DIR, "gifs/win.gif"))
+            for i in range(gif_w.n_frames):
+                gif_w.seek(i)
+                surface = pygame.image.fromstring(gif_w.convert("RGBA").tobytes("raw", "RGBA"), gif_w.size, "RGBA")
+                self.win_frames.append(pygame.transform.scale(surface, (WIDTH, HEIGHT)))
+        except: pass
+
+        self.lose_frames = []
+        try:
+            gif_l = Image.open(os.path.join(ASSETS_DIR, "gifs/lose.gif"))
+            for i in range(gif_l.n_frames):
+                gif_l.seek(i)
+                surface = pygame.image.fromstring(gif_l.convert("RGBA").tobytes("raw", "RGBA"), gif_l.size, "RGBA")
+                self.lose_frames.append(pygame.transform.scale(surface, (WIDTH, HEIGHT)))
+        except: pass
 
     # função pra escrever na tela
     def draw_text(self, text, size, color, x, y, align='center'): # desenha o texto na tela
@@ -104,26 +129,12 @@ class UI:
         return None
 
     def screen_settings(self): # exibe a tela de configurações do jogo
-        self.screen.fill(BLACK) # limpa a tela
-        self.draw_text("Configurações & Ajuda", 40, YELLOW, WIDTH/2, 50) # escreve no topo "Configurações & Ajuda"
-        
-        instrucoes = [ # lista de instruções com as strings que serão utlizadas no texto
-            "--- CONTROLES ---",
-            "Mover: Setas Direcionais",
-            "Pular: [BARRA DE ESPAÇO]",
-            "Subir/Descer: Setas Cima/Baixo",
-            "[P]: Pausar o jogo",
-            "",
-            "--- ITENS ---",
-            "Maçã: Pressione [A] para curar",
-            "Martelo: Quebra Barris",
-            "Moeda: Pontuação Extra"
-        ]
-        
-        for i, linha in enumerate(instrucoes):
-            self.draw_text(linha, 20, WHITE, WIDTH/2, 130 + (i * 35)) 
+        if self.settings_bg:
+            self.screen.blit(self.settings_bg, (0, 0)) # desenha o PNG de configurações
+        else:
+            self.screen.fill(BLACK) # limpa a tela
+            self.draw_text("Configurações", 40, YELLOW, WIDTH/2, 50) 
             
-        self.draw_text("Pressione [ESC] ou [ENTER] para voltar", 18, GRAY, WIDTH/2, HEIGHT - 50) 
         pygame.display.flip()
         self._wait_key(['RETURN', 'ESCAPE']) 
         return 'MENU' 
@@ -133,14 +144,14 @@ class UI:
         clock = pygame.time.Clock()
         
         while waiting:
-            clock.tick(20) # Velocidade da animação de pause
+            clock.tick(20) # velocidade da animação de pause
             
             if self.pause_frames:
-                # Desenha o GIF animado de pause
+                # desenha o gif animado de pause
                 self.current_pause_frame = (self.current_pause_frame + 1) % len(self.pause_frames)
                 self.screen.blit(self.pause_frames[self.current_pause_frame], (0, 0))
             else:
-                # Se não houver GIF, usa o overlay transparente padrão
+                # se nao achar o gif, usa o overlay transparente padrão
                 overlay = pygame.Surface((WIDTH, HEIGHT))
                 overlay.set_alpha(150)
                 overlay.fill(BLACK)
@@ -155,24 +166,38 @@ class UI:
                     if event.key == pygame.K_s: return 'MENU' 
                     
     def screen_gameover(self, won, coins, start_time): # exibe a tela de game over
-        self.screen.fill(BLACK)
-        title = "Você venceu!" if won else "GAME OVER!" # condicionais para qual título mostrar
-        color = GREEN if won else RED
+        waiting = True
+        clock = pygame.time.Clock()
+        current_frame = 0
+        # seleciona qual lista de frames usar
+        frames = self.win_frames if won else self.lose_frames
         
-        remaining = max(0, GAME_DURATION - ((pygame.time.get_ticks() - start_time) / 1000)) # calcula quanto tempo sobrou
-        score_base = int(remaining * 1000) # a pontuação será o tempo sobrado multiplicado por 1000
-        bonus_moedas = 1 + (coins * 0.05) # bônus por moeda coletada
-        
-        if not won:
-            final_score = int(coins * 100) # se perdeu
-        else:
-            final_score = int(score_base * bonus_moedas) # se ganhou
+        while waiting:
+            clock.tick(20)
+            if frames:
+                current_frame = (current_frame + 1) % len(frames)
+                self.screen.blit(frames[current_frame], (0, 0))
+            else:
+                self.screen.fill(BLACK)
+
+            remaining = max(0, GAME_DURATION - ((pygame.time.get_ticks() - start_time) / 1000)) # calcula quanto tempo sobrou
+            score_base = int(remaining * 1000) # a pontuação será o tempo sobrado multiplicado por 1000
+            bonus_moedas = 1 + (coins * 0.05) # bônus por moeda coletada
             
-        self.draw_text(title, 48, color, WIDTH/2, HEIGHT/4) 
-        self.draw_text(f"Pontuação Final: {final_score}", 36, YELLOW, WIDTH/2, HEIGHT/2) 
-        self.draw_text("Enter para Menu", 18, WHITE, WIDTH/2, HEIGHT*3/4) 
-        pygame.display.flip()
-        self._wait_key(['RETURN']) 
+            if not won:
+                final_score = int(coins * 100) # se perdeu
+            else:
+                final_score = int(score_base * bonus_moedas) # se ganhou
+                
+            self.draw_text(f"Pontuação Final: {final_score}", 36, YELLOW, WIDTH/2, HEIGHT/2) # exibe apenas a pontuação final
+            pygame.display.flip()
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT: return 'QUIT'
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN: waiting = False # sai do loop ao apertar enter
+        
+        return 'MENU'
 
     def _wait_key(self, keys): # função de espera
         waiting = True
