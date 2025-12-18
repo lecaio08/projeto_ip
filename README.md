@@ -4,12 +4,12 @@
 
 | nome | email | responsabilidades |
 |-----------------------------------------|----------------------|-------------------------------------------------------------|
-| Victor Amorim Padilha | vap4@cin.ufpe.br | Correção de bugs e implementação de features |
-| Caio Leon Almeida Andrade Michalewicz | claam@cin.ufpe.br | Correção de bugs |
-| Enzo Nogueira Sarafim | ens2@cin.ufpe.br | Arte |
-| Leonardo Portela Chiu | lpc4@cin.ufpe.br | Arte |
-| Pedro Henrique Borges Ribeiro | phbr@cin.ufpe.br | Coordenação criativa |
-| [Gustavo Antônio Linhares Sales](https://linkedin.com/in/gustavo-linhares0xf) | gals2@cin.ufpe.br | Implementação dos requisitos mínimos, slides e relatório |
+| Victor Amorim Padilha | vap4@cin.ufpe.br | Code review, correção de bugs, implementação de features e QA |
+| Caio Leon Almeida Andrade Michalewicz | claam@cin.ufpe.br | Code review, correção de bugs e QA |
+| Enzo Nogueira Sarafim | ens2@cin.ufpe.br | arte dos personagens |
+| Leonardo Portela Chiu | lpc4@cin.ufpe.br | arte dos menus |
+| Pedro Henrique Borges Ribeiro | phbr@cin.ufpe.br | coordenação criativa, fase building e correção de bugs |
+| [Gustavo Antônio Linhares Sales](https://linkedin.com/in/gustavo-linhares0xf) | gals2@cin.ufpe.br | Estruturação do grupo, protótipo do projeto, correção de bugs, slides e relatório |
 
 
 
