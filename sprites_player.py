@@ -22,7 +22,7 @@ class Player(pygame.sprite.Sprite):
 
         # carrega o gif do lyoda andando
         self.walk_frames = []
-        path_walk        = os.path.join(ASSETS_DIR, "gifs/Iyoda_caminhando.gif")
+        path_walk        = os.path.join(ASSETS_DIR, "gifs/Iyoda_caminha.gif")
         gif              = Image.open(path_walk)
         
         for frame_index in range(gif.n_frames):
@@ -158,3 +158,4 @@ class Player(pygame.sprite.Sprite):
                     self.image.set_alpha(100) # translucido
                 else:
                     self.image.set_alpha(255) # opaco
+
