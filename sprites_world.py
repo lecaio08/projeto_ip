@@ -1,4 +1,6 @@
 import pygame
+import os
+from PIL import Image
 from settings import *
 
 # definindo a classe Platform, que herda a classe Sprite do PyGame. aqui criaremos o objeto da plataforma (é um jogo de plataforma ne)
@@ -42,22 +44,68 @@ class Goal(pygame.sprite.Sprite):
     # constructor da classe, passando somente as coordeenadas
     def __init__(self, x, y):
         super().__init__()
-        # cria o quadrado rosa
-        self.image = pygame.Surface((40, 40))
-        self.image.fill((255, 105, 180))
+        
+
+        self.frames          = []
+        self.current_frame   = 0
+        self.animation_speed = 0.15 # velocidade da troca de frame
+        
+        path_goal = os.path.join(ASSETS_DIR, "gifs/byte.gif")
+        
+        try:
+            gif = Image.open(path_goal)
+            for i in range(gif.n_frames):
+                gif.seek(i)
+                frame = gif.convert("RGBA")
+                raw = frame.tobytes("raw", "RGBA")
+                surface = pygame.image.fromstring(raw, gif.size, "RGBA")
+                surface = pygame.transform.scale(surface, (50, 50))
+                self.frames.append(surface)
+            self.image = self.frames[0]
+        except Exception as e:
+            self.image = pygame.Surface((40, 40))
+            self.image.fill((255, 105, 180))
+            print(f"Erro ao carregar o GIF do Goal: {e}")
+
         # posiciona pelo centro pq é mais fácil de alinhar
-        self.rect = self.image.get_rect()
+        self.rect        = self.image.get_rect()
         self.rect.center = (x, y)
+
+    def update(self):
+        if len(self.frames) > 1:
+            self.current_frame += self.animation_speed
+            if self.current_frame >= len(self.frames):
+                self.current_frame = 0
+            self.image = self.frames[int(self.current_frame)]
 
 # definindo a classe Barrel, que herda a classe Sprite do PyGame. aqui criaremos o objeto dos barris
 class Barrel(pygame.sprite.Sprite):
     # constructor da classe, passando as coordenadas e os limites de atuação dos barris
     def __init__(self, x, y, min_x, max_x):
         super().__init__()
-        # criando um quadrado vermelho com um circulo no centro
-        self.image = pygame.Surface((30, 30))
-        self.image.fill(RED) 
-        pygame.draw.circle(self.image, (100, 0, 0), (15, 15), 15)
+        
+        self.frames          = []
+        self.current_frame   = 0
+        self.animation_speed = 0.2 # Velocidade da rotação/animação do barril
+        
+        path_barrel = os.path.join(ASSETS_DIR, "gifs/Serra_circular.gif")
+        
+        try:
+            gif = Image.open(path_barrel)
+            for i in range(gif.n_frames):
+                gif.seek(i)
+                frame = gif.convert("RGBA")
+                raw = frame.tobytes("raw", "RGBA")
+                surface = pygame.image.fromstring(raw, gif.size, "RGBA")
+                surface = pygame.transform.scale(surface, (100, 100))
+                self.frames.append(surface)
+            self.image = self.frames[0]
+        except Exception as e:
+            # criando um quadrado vermelho com um circulo no centro (prototipo)
+            self.image = pygame.Surface((30, 30))
+            self.image.fill(RED) 
+            pygame.draw.circle(self.image, (100, 0, 0), (15, 15), 15)
+            print(f"Erro ao carregar o GIF do Barrel: {e}")
         
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
@@ -72,9 +120,17 @@ class Barrel(pygame.sprite.Sprite):
         # x = xo + vt
         self.rect.x += self.vel_x
         
-        # bate-volta do brassil
+        # bate-volta
         if self.rect.right > self.max_x or self.rect.left < self.min_x:
             # inverte a direção => multiplicando a velocidade por -1
             self.vel_x *= -1
 
-# O IDEAL É TER APENAS UMA CLASSE POR CÓDIGO, NÃO ESQUEÇA DE VER ISSO! VOCE NAO ESTUDOU MVC A TOA.
+        if self.frames:
+            self.current_frame += self.animation_speed
+            if self.current_frame >= len(self.frames):
+                self.current_frame = 0
+            self.image = self.frames[int(self.current_frame)]
+            
+            # espelha o GIF se o barril estiver indo para a esquerda para parecer que está rolando
+            if self.vel_x < 0:
+                self.image = pygame.transform.flip(self.image, True, False)
