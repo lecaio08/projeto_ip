@@ -97,7 +97,7 @@ class Barrel(pygame.sprite.Sprite):
                 frame = gif.convert("RGBA")
                 raw = frame.tobytes("raw", "RGBA")
                 surface = pygame.image.fromstring(raw, gif.size, "RGBA")
-                surface = pygame.transform.scale(surface, (100, 100))
+                surface = pygame.transform.scale(surface, (30, 30))
                 self.frames.append(surface)
             self.image = self.frames[0]
         except Exception as e:
@@ -134,3 +134,4 @@ class Barrel(pygame.sprite.Sprite):
             # espelha o GIF se o barril estiver indo para a esquerda para parecer que está rolando
             if self.vel_x < 0:
                 self.image = pygame.transform.flip(self.image, True, False)
+
