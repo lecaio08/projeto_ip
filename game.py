@@ -16,6 +16,7 @@ class Game:
         self.state   = 'MENU' # define o estado inicial
         self.ui      = UI(self.screen)  # cria a interface gráfica
         self.pause_start_time = 0 # guarda o momento que o pause começou
+        self.end_time = 0 # tempo fixo para marcar quando que o jogo termina
             
     def new_game(self):
         self.all_sprites = pygame.sprite.Group()
@@ -162,7 +163,7 @@ class Game:
                     item.kill()
 
         if pygame.sprite.spritecollide(self.player, self.goals, False): # se ele chegar no objetivo, vai para a tela de game over parabenizando pela vitória
-            self.won = True; self.playing = False; self.state = 'GAMEOVER'
+            self.won = True; self.playing = False; self.state = 'GAMEOVER'; self.end_time = pygame.time.get_ticks()
         
         if (pygame.time.get_ticks() - self.start_time)/1000 > GAME_DURATION: # se o tempo acabar, acaba o jogo
             self.playing = False; self.state = 'GAMEOVER'
@@ -188,6 +189,10 @@ class Game:
     def draw(self):
         self.screen.fill(BGCOLOR) # limpa a tela com a cor de fundo
         self.all_sprites.draw(self.screen) # desenha todos os prites do jogo
-        self.ui.draw_hud(self.player, self.coins, self.start_time) # desenha a interface (HUD)
+        if self.state == 'GAMEOVER' and self.end_time:
+            self.ui.draw_hud(self.player, self.coins, self.start_time, self.end_time)
+        else:
+            self.ui.draw_hud(self.player, self.coins, self.start_time)
         pygame.display.flip() # atualiza a tela
+
 
