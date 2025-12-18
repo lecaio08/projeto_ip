@@ -15,6 +15,7 @@ class Game:
         self.running = True
         self.state   = 'MENU' # define o estado inicial
         self.ui      = UI(self.screen)  # cria a interface gráfica
+        self.pause_start_time = 0 # guarda o momento que o pause começou
             
     def new_game(self):
         self.all_sprites = pygame.sprite.Group()
@@ -94,6 +95,17 @@ class Game:
         for g in groups: g.add(sprite)  # adiciona sprite aos grupos específicos
 
     def run(self): # responsável por manter o jogo rodando
+        # lógica de compensação de tempo do pause
+        if self.pause_start_time > 0:
+            # calcula quanto tempo ficou parado (agora - hora que pausou)
+            pause_duration = pygame.time.get_ticks() - self.pause_start_time
+            
+            # adiciona esse tempo ao start_time para "atrasar" o relógio do jogo
+            self.start_time += pause_duration
+            
+            # reseta a variável para não somar de novo
+            self.pause_start_time = 0
+
         self.playing = True
         while self.playing: # enquanto o jogo está rodando:
             self.clock.tick(FPS) # controla o fps
@@ -159,6 +171,7 @@ class Game:
             
             if event.type == pygame.KEYDOWN: # se o usuário apertar a tecla 'esc' ou a tecla 'p', ele pausa o jogo
                 if event.key == pygame.K_p:
+                    self.pause_start_time = pygame.time.get_ticks() # salva o momento exato que o player apertou "P"
                     self.state = 'PAUSE'; self.playing = False
                 
                 if event.key == pygame.K_SPACE: # se o usuário apertar a tecla de espaço, ele pula
@@ -174,5 +187,4 @@ class Game:
         self.all_sprites.draw(self.screen) # desenha todos os prites do jogo
         self.ui.draw_hud(self.player, self.coins, self.start_time) # desenha a interface (HUD)
         pygame.display.flip() # atualiza a tela
-
 
