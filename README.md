@@ -33,9 +33,11 @@
 
 ## conceitos trabalhos
 
-- Orientação a objetos
+- Orientação a objetos: classes, métodos e propriedades
 - Modularização
 - Uso de bibliotecas públicas e built-in
+- Estruturas de dados
+- Laços de repetição
 
 ## desafios e erros
 
