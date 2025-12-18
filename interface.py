@@ -123,5 +123,5 @@ class UI:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RETURN and 'RETURN' in keys: return 'GAME' # verifica se o jogador quer entrar no jogo
                     if event.key == pygame.K_o and 'o' in keys: return 'SETTINGS' # verifica se o jogador quer entrar no menu de configurações
-                    if event.key == pygame.K_ESCAPE and 'ESCAPE' in keys: return 'ESCAPE' # verifica se o jogador que está no menu de configurações quer voltar pro menu principal
+                    if event.key == pygame.K_ESCAPE and 'ESCAPE' in keys: return 'ESCAPE' # verifica se o jogador quer pausar o jogo 
         return None
